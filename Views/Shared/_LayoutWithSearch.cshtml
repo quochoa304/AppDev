@@ -1,0 +1,13 @@
+﻿@{
+    Layout = "_Layout";
+    SearchViewModel model = SearchViewModel.BookSearchViewModel;
+}
+@section Search {
+    <partial name="_SearchPartial" model="model" />
+}
+
+    @RenderBody()
+    @section Scripts{
+    @await RenderSectionAsync("Scripts", required: false)
+
+    }

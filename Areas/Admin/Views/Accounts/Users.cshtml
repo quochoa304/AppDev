@@ -1,0 +1,38 @@
+﻿@model IEnumerable<ApplicationUser>
+
+@{
+}
+
+<h1>@ViewData["Title"]</h1>
+<a class="btn btn-primary"asp-action="Index">Back to home</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td scope="col">
+                @Html.DisplayNameFor(item => item.FullName)
+            </td>
+            <td scope="col">
+                @Html.DisplayNameFor(item => item.Email)
+            </td>
+            <td scope="col">
+                Actions
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td scope="col">
+                    @Html.DisplayFor(mi => user.FullName)
+                </td>
+                <td scope="col">
+                    @Html.DisplayFor(mi => user.Email)
+                </td>
+                <td scope="col">
+                    <a class="btn btn-danger btn-sm" asp-action="ResetPassword" asp-route-id="@user.Id" asp-route-returnUrl="@ViewData["ReturnUrl"]">Reset password</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

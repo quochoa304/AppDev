@@ -1,0 +1,53 @@
+﻿@model IEnumerable<AppDev.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Cart</h1>
+
+<p>
+    <a asp-action="Checkout" class="btn btn-primary">Checkout</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                Book Title
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book.Price)
+            </th>
+            <th>
+                Total
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    <a asp-action="Details" asp-controller="Books" asp-route-id="@item.BookId" class="text-decoration-none text-black">
+                        @Html.DisplayFor(modelItem => item.Book.Title)
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Book.Price)
+                </td>
+                <td>
+                    $@(item.Book.Price * item.Quantity)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

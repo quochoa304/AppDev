@@ -1,0 +1,111 @@
+﻿@model CheckoutViewModel
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+<div class="text-center">
+    <h1>Checkout</h1>
+</div>
+@if (Model.Orders.Count() == 0)
+{
+    <div class="text-center">
+        <p class="text-black">Your cart is emply, please add things to cart before checking out.</p>
+        <a class="btn btn-primary" asp-action="Index" asp-controller="Books">Continue to browser</a>
+    </div>
+}
+else
+{
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-7 my-3">
+            <h4>Orders</h4>
+            @foreach (var order in Model.Orders)
+            {
+                <table class="table table-hover caption-top">
+                    <caption class="h5">@order.Store.Name</caption>
+                    <thead>
+                        <tr>
+                            <th scope="auto">
+                                Book Title
+                            </th>
+                            <th scope="col">
+                                Quantity
+                            </th>
+                            <th scope="col">
+                                Price
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in order.OrderItems)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Book.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity)
+                                </td>
+                                <td>
+                                    $@(item.Price * item.Quantity)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th scope="col" colspan="2">
+                                Total Price
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayFor(modelItem => order.TotalPrice)
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+            }
+        </div>
+        <div class="col-lg-4 col-md-5 my-3">
+            <form method="post">
+                <h4>Shipping infomation</h4>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="my-3">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="my-3">
+                    <label asp-for="Address" class="form-label"></label>
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+                <div class="my-3">
+                    <label asp-for="PhoneNumber" class="form-label"></label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <hr class="my4" />
+                <h5 class="mb-3">Payment</h5>
+                <div class="my-3">
+                    <div class="form-check">
+                        <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required="">
+                        <label class="form-check-label" for="debit">Cash on delivery</label>
+                    </div>
+                    <div class="form-check">
+                        <input id="credit" name="paymentMethod" type="radio" class="form-check-input" required="">
+                        <label class="form-check-label" for="credit">Credit card</label>
+                    </div>
+                    <div class="form-check">
+                        <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required="">
+                        <label class="form-check-label" for="paypal">PayPal</label>
+                    </div>
+                </div>
+                <input type="submit" value="Process" class="btn btn-primary" />
+            </form>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

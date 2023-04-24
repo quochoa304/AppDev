@@ -1,0 +1,5 @@
+﻿@model SearchViewModel
+<form method="get" action="@Model?.Action">
+    <input asp-for="Type" type="hidden" />
+    <input asp-for="KeyWord" class="form-control" placeholder="Searching..." />
+</form>
